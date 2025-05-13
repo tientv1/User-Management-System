@@ -28,22 +28,24 @@ public class UserManagementService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public ReqRes register(ReqRes registrationRequest) {
+    public ReqRes register(ReqRes registrationRequest){
         ReqRes resp = new ReqRes();
+
         try {
-            OurUsers ourUsers = new OurUsers();
-            ourUsers.setEmail(registrationRequest.getEmail());
-            ourUsers.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-            ourUsers.setRole(registrationRequest.getRole());
-            ourUsers.setName(registrationRequest.getName());
-            ourUsers.setCity(registrationRequest.getCity());
-            OurUsers ourUsersResult = usersRepository.save(ourUsers);
-            if (ourUsersResult.getId() > 0) {
-                resp.setOurUsers(ourUsersResult);
+            OurUsers ourUser = new OurUsers();
+            ourUser.setEmail(registrationRequest.getEmail());
+            ourUser.setCity(registrationRequest.getCity());
+            ourUser.setRole(registrationRequest.getRole());
+            ourUser.setName(registrationRequest.getName());
+            ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            OurUsers ourUsersResult = usersRepository.save(ourUser);
+            if (ourUsersResult.getId()>0) {
+                resp.setOurUsers((ourUsersResult));
                 resp.setMessage("User Saved Successfully");
                 resp.setStatusCode(200);
             }
-        } catch (Exception e) {
+
+        }catch (Exception e){
             resp.setStatusCode(500);
             resp.setError(e.getMessage());
         }
