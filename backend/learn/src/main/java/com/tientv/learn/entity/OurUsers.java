@@ -17,10 +17,10 @@ public class OurUsers implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String email;
-    private String password;
-    private String role;
     private String name;
+    private String password;
     private String city;
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
